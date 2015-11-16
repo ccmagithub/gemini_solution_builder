@@ -19,7 +19,7 @@ from gemini_solution_builder import errors
 from gemini_solution_builder import utils
 
 
-latest_version = '3.0.0'
+latest_version = '1.0.0'
 
 
 def get_mapping():
@@ -31,16 +31,16 @@ def get_mapping():
         {'version': '1.0.0',
          'templates': ['templates/base', 'templates/v1/'],
          'validator': validators.ValidatorV1,
-         'builder': build.BuildPluginV1},
-        {'version': '2.0.0',
-         'templates': ['templates/base', 'templates/v2/solution_data/'],
-         'validator': validators.ValidatorV2,
-         'builder': build.BuildPluginV2},
-        {'version': '3.0.0',
-         'templates': ['templates/base', 'templates/v3/solution_data/'],
-         'validator': validators.ValidatorV3,
-         'builder': build.BuildPluginV3}]
-
+         'builder': build.BuildSolutionV1},
+#        {'version': '2.0.0',
+#         'templates': ['templates/base', 'templates/v2/solution_data/'],
+#         'validator': validators.ValidatorV2,
+#         'builder': build.BuildSolutionV2},
+#        {'version': '3.0.0',
+#         'templates': ['templates/base', 'templates/v3/solution_data/'],
+#         'validator': validators.ValidatorV3,
+#         'builder': build.BuildSolutionV3}]
+    ]
 
 def get_solution_for_version(version):
     """Retrieves data which are required for specific version of solution
@@ -73,7 +73,7 @@ def get_version_mapping_from_solution(solution_path):
     """
     meta_path = join_path(solution_path, 'metadata.yaml')
     if not utils.exists(meta_path):
-        errors.WrongPluginDirectoryError(
+        errors.WrongSolutionDirectoryError(
             'Wrong path to the solution, cannot find "%s" file', meta_path)
 
     meta = utils.parse_yaml(meta_path)

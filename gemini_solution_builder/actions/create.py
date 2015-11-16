@@ -27,7 +27,7 @@ from gemini_solution_builder import version_mapping
 logger = logging.getLogger(__name__)
 
 
-class CreatePlugin(BaseAction):
+class CreateSolution(BaseAction):
 
     solution_name_pattern = re.compile(consts.SOLUTION_NAME_PATTERN)
 
@@ -43,8 +43,8 @@ class CreatePlugin(BaseAction):
 
     def check(self):
         if utils.exists(self.solution_path):
-            raise errors.PluginDirectoryExistsError(
-                'Plugins directory {0} already exists, '
+            raise errors.SolutionDirectoryExistsError(
+                'Solutions directory {0} already exists, '
                 'choose another name'.format(self.solution_path))
 
         if not self.solution_name_pattern.match(self.solution_name):
@@ -61,4 +61,4 @@ class CreatePlugin(BaseAction):
                 os.path.dirname(__file__), '..', template_path)
 
             utils.copy(template_dir, self.solution_path)
-            utils.render_files_in_dir(self.solution_path, self.render_ctx)
+            # utils.render_files_in_dir(self.solution_path, self.render_ctx)

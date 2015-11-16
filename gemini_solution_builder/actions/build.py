@@ -24,14 +24,14 @@ from os.path import join as join_path
 from gemini_solution_builder.actions import BaseAction
 from gemini_solution_builder import errors
 from gemini_solution_builder import utils
-# from gemini_solution_builder.validators import ValidatorManager
+from gemini_solution_builder.validators import ValidatorManager
 from gemini_solution_builder import version_mapping
 
 
 logger = logging.getLogger(__name__)
 
 
-class BaseBuildPlugin(BaseAction):
+class BaseBuildSolution(BaseAction):
 
     @abc.abstractproperty
     def requires(self):
@@ -132,7 +132,7 @@ class BaseBuildPlugin(BaseAction):
         ValidatorManager(self.solution_path).get_validator().validate()
 
 
-class BuildPluginV1(BaseBuildPlugin):
+class BuildSolutionV1(BaseBuildSolution):
 
     requires = ['rpm', 'createrepo', 'dpkg-scanpackages']
 
@@ -151,7 +151,7 @@ class BuildPluginV1(BaseBuildPlugin):
         utils.make_tar_gz(self.build_src_dir, tar_path, full_name)
 
 
-class BuildPluginV2(BaseBuildPlugin):
+class BuildSolutionV2(BaseBuildSolution):
 
     requires = ['rpmbuild', 'rpm', 'createrepo', 'dpkg-scanpackages']
 
@@ -159,7 +159,7 @@ class BuildPluginV2(BaseBuildPlugin):
     release_tmpl_src_path = 'templates/v2/build/Release.mako'
 
     def __init__(self, *args, **kwargs):
-        super(BuildPluginV2, self).__init__(*args, **kwargs)
+        super(BuildSolutionV2, self).__init__(*args, **kwargs)
 
         self.solution_version, self.full_version = \
             utils.version_split_name_rpm(self.meta['version'])
@@ -236,13 +236,13 @@ class BuildPluginV2(BaseBuildPlugin):
                  'major_version': self.solution_version})
 
 
-class BuildPluginV3(BuildPluginV2):
+class BuildSolutionV3(BuildSolutionV2):
 
     rpm_spec_src_path = 'templates/v3/build/solution_rpm.spec.mako'
     release_tmpl_src_path = 'templates/v3/build/Release.mako'
 
     def _make_data_for_template(self):
-        data = super(BuildPluginV3, self)._make_data_for_template()
+        data = super(BuildSolutionV3, self)._make_data_for_template()
 
         uninst = utils.read_if_exist(
             join_path(self.solution_path, "uninstall.sh"))

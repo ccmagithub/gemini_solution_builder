@@ -21,6 +21,6 @@ If you use Ubuntu, run:
 If you use CentOS, run:
     # yum install createrepo dpkg-devel dpkg-dev rpm rpm-build
 """
-SOLUTION_WRONG_NAME_EXCEPTION_MESSAGE = ("Plugin name is invalid, use only "
+SOLUTION_WRONG_NAME_EXCEPTION_MESSAGE = ("Solution name is invalid, use only "
                                          "lower case letters, numbers, '_', '-' "
                                          "symbols")

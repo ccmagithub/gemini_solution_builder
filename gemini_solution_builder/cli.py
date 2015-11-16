@@ -21,7 +21,7 @@ import sys
 from gemini_solution_builder import actions
 from gemini_solution_builder import errors
 from gemini_solution_builder import messages
-# from gemini_solution_builder.validators import ValidatorManager
+from gemini_solution_builder.validators import ValidatorManager
 
 from gemini_solution_builder.logger import configure_logger
 
@@ -99,7 +99,7 @@ def perform_action(args):
     :param args: argparse object
     """
     if args.create:
-        actions.CreatePlugin(args.create, args.package_version).run()
+        actions.CreateSolution(args.create, args.package_version).run()
         print('Solution is created')
     elif args.build:
         actions.make_builder(args.build).run()

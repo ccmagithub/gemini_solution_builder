@@ -14,7 +14,7 @@
 
 
 from gemini_solution_builder.actions.base import BaseAction
-from gemini_solution_builder.actions.create import CreatePlugin
-from gemini_solution_builder.actions.build import BuildPluginV1
-from gemini_solution_builder.actions.build import BuildPluginV2
+from gemini_solution_builder.actions.create import CreateSolution
+from gemini_solution_builder.actions.build import BuildSolutionV1
+# from gemini_solution_builder.actions.build import BuildSolutionV2
 from gemini_solution_builder.actions.build import make_builder

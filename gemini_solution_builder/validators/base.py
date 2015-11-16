@@ -99,10 +99,10 @@ class BaseValidator(object):
         self.validate_file_by_schema(
             self.schema.metadata_schema,
             self.meta_path)
-        self.validate_file_by_schema(
-            self.schema.tasks_schema,
-            self.tasks_path)
-        self.check_env_config_attrs()
+        # self.validate_file_by_schema(
+        #     self.schema.tasks_schema,
+        #     self.tasks_path)
+        # self.check_env_config_attrs()
 
     def check_env_config_attrs(self):
         """Check attributes in environment config file.

@@ -77,6 +77,6 @@ def get_version_mapping_from_solution(solution_path):
             'Wrong path to the solution, cannot find "%s" file', meta_path)
 
     meta = utils.parse_yaml(meta_path)
-    package_version = meta.get('package_version')
+    package_version = meta.get('version')
 
     return get_solution_for_version(package_version)

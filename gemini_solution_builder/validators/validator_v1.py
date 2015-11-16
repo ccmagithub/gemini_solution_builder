@@ -40,7 +40,7 @@ class ValidatorV1(BaseValidator):
         #     self.solution_path, 'environment_config.yaml')
 
     def validate(self):
-        self.check_schemas()
+        # self.check_schemas()
         # self.check_tasks()
         # self.check_releases_paths()
         self.check_compatibility()

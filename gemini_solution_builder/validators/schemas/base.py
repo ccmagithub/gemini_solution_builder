@@ -73,10 +73,9 @@ class BaseSchema(object):
                 'name',
                 'title',
                 'version',
-                'package_version',
                 'description',
+                'category',
                 'gemini_version',
-                'releases',
             ],
             'properties': {
                 'name': {
@@ -84,12 +83,10 @@ class BaseSchema(object):
                     'pattern': consts.SOLUTION_NAME_PATTERN},
                 'title': {'type': 'string'},
                 'version': {'type': 'string'},
-                'package_version': {'enum': ['1.0.0']},
+                'version': {'enum': ['1.0.0']},
                 'description': {'type': 'string'},
-                'gemini_version': self.list_of_strings,
-                'releases': {
-                    'type': 'array',
-                    'items': self.solution_release_schema}}
+                'category': {'type': 'string'},
+                'gemini_version': self.list_of_strings}
         }
 
     @property

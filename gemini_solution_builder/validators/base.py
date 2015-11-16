@@ -169,6 +169,6 @@ class BaseValidator(object):
                     ' Please remove {2} version from metadata.yaml file or'
                     ' downgrade package_version.'
                     .format(
-                        meta['package_version'],
+                        meta['version'],
                         self.basic_version,
                         gemini_release))

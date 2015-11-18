@@ -1,0 +1,6 @@
+argparse
+six
+Mako
+PyYAML
+jsonschema
+ZipTools

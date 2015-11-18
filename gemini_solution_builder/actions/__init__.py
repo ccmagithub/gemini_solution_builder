@@ -13,8 +13,8 @@
 #    under the License.
 
 
-from gemini_solution_builder.actions.base import BaseAction
-from gemini_solution_builder.actions.create import CreateSolution
-from gemini_solution_builder.actions.build import BuildSolutionV1
-# from gemini_solution_builder.actions.build import BuildSolutionV2
-from gemini_solution_builder.actions.build import make_builder
+from gemini_solution_builder.actions.base import BaseAction  # noqa
+from gemini_solution_builder.actions.create import CreateSolution  # noqa
+from gemini_solution_builder.actions.build import BuildSolutionV1  # noqa
+from gemini_solution_builder.actions.build import BuildSolutionV2  # noqa
+from gemini_solution_builder.actions.build import make_builder  # noqa

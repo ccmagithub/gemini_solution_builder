@@ -32,15 +32,8 @@ def get_mapping():
          'templates': ['templates/base', 'templates/v1/'],
          'validator': validators.ValidatorV1,
          'builder': build.BuildSolutionV1},
-#        {'version': '2.0.0',
-#         'templates': ['templates/base', 'templates/v2/solution_data/'],
-#         'validator': validators.ValidatorV2,
-#         'builder': build.BuildSolutionV2},
-#        {'version': '3.0.0',
-#         'templates': ['templates/base', 'templates/v3/solution_data/'],
-#         'validator': validators.ValidatorV3,
-#         'builder': build.BuildSolutionV3}]
     ]
+
 
 def get_solution_for_version(version):
     """Retrieves data which are required for specific version of solution

@@ -64,9 +64,6 @@ def parse_args():
         description='gsb is a gemini solution which '
         'helps you create solution for gemini cloud')
 
-    #TODO(vsharshov): we should move to subcommands instead of
-    # exclusive group, because in this case we could not
-    # support such behavior [-a xxx | [-b yyy -c zzz]]
     group = parser.add_mutually_exclusive_group(required=True)
 
     group.add_argument(

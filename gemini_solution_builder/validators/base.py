@@ -162,10 +162,11 @@ class BaseValidator(object):
         """
         meta = utils.parse_yaml(self.meta_path)
         for gemini_release in meta['gemini_version']:
-            if StrictVersion(gemini_release) < StrictVersion(self.basic_version):
+            if StrictVersion(gemini_release) < \
+                    StrictVersion(self.basic_version):
                 raise errors.ValidationError(
-                    'Current solution format {0} is not compatible with {2} Gemini'
-                    ' release. Gemini version must be {1} or higher.'
+                    'Current solution format {0} is not compatible with {2}'
+                    ' Gemini release. Gemini version must be {1} or higher.'
                     ' Please remove {2} version from metadata.yaml file or'
                     ' downgrade package_version.'
                     .format(

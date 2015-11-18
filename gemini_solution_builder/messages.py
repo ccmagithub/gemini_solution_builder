@@ -22,5 +22,5 @@ If you use CentOS, run:
     # yum install createrepo dpkg-devel dpkg-dev rpm rpm-build
 """
 SOLUTION_WRONG_NAME_EXCEPTION_MESSAGE = ("Solution name is invalid, use only "
-                                         "lower case letters, numbers, '_', '-' "
-                                         "symbols")
+                                         "lower case letters, numbers, '_', "
+                                         "'-' symbols")

@@ -132,6 +132,7 @@ class BaseBuildSolution(BaseAction):
         ValidatorManager(self.solution_path).get_validator().validate()
 
 
+# TODO package files into zip with package name as file name
 class BuildSolutionV1(BaseBuildSolution):
 
     requires = ['rpm', 'createrepo', 'dpkg-scanpackages']

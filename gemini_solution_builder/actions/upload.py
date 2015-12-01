@@ -14,7 +14,6 @@
 
 
 import logging
-import os
 import re
 
 from gemini_solution_builder.actions import BaseAction
@@ -27,7 +26,7 @@ from gemini_solution_builder import version_mapping
 logger = logging.getLogger(__name__)
 
 
-class CreateSolution(BaseAction):
+class UploadSolution(BaseAction):
 
     solution_name_pattern = re.compile(consts.SOLUTION_NAME_PATTERN)
 
@@ -52,13 +51,4 @@ class CreateSolution(BaseAction):
                 messages.SOLUTION_WRONG_NAME_EXCEPTION_MESSAGE)
 
     def run(self):
-        logger.debug('Start solution creation "%s"', self.solution_path)
-        self.check()
-
-        for template_path in self.template_paths:
-
-            template_dir = os.path.join(
-                os.path.dirname(__file__), '..', template_path)
-
-            utils.copy(template_dir, self.solution_path)
-            utils.render_files_in_dir(self.solution_path, self.render_ctx)
+        logger.debug('Start solution uploading "%s"', self.solution_path)

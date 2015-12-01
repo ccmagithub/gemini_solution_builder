@@ -75,6 +75,9 @@ def parse_args():
     group.add_argument(
         '--check', help='check that solution is valid',
         type=decode_string, metavar='path_to_directory')
+    group.add_argument(
+        '--upload', help='upload a solution',
+        type=decode_string, metavar='path_to_package')
 
     parser.add_argument(
         '--debug', help='enable debug mode',
@@ -104,6 +107,8 @@ def perform_action(args):
     elif args.check:
         ValidatorManager(args.check).get_validator().validate()
         print('Solution is valid')
+    elif args.upload:
+        actions.UploadSolution(args.upload).run()
 
 
 def package_version_check(args, parser):

@@ -22,6 +22,7 @@ from gemini_solution_builder import actions
 from gemini_solution_builder import errors
 from gemini_solution_builder import messages
 from gemini_solution_builder.validators import ValidatorManager
+from gemini_solution_builder.common import utils
 
 from gemini_solution_builder.logger import configure_logger
 
@@ -78,7 +79,11 @@ def parse_args():
     group.add_argument(
         '--upload', help='upload a solution',
         type=decode_string, metavar='path_to_package')
-
+    group.add_argument(
+        '--list', help='list a solution', action='store_true')
+    group.add_argument(
+        '--delete', help='delete a solution',
+        type=decode_string, metavar='solution_id')
     parser.add_argument(
         '--debug', help='enable debug mode',
         action="store_true")
@@ -86,6 +91,21 @@ def parse_args():
     parser.add_argument(
         '--package-version', help='which package version to use',
         type=decode_string)
+
+    # ex. admin
+    parser.add_argument(
+        '--username', default=utils.env('GOC_USERNAME'),
+        help='Defaults to env[GOC_USERNAME].')
+
+    # ex. admin
+    parser.add_argument(
+        '--password', default=utils.env('GOC_PASSWORD'),
+        help='Defaults to env[GOC_PASSWORD].')
+
+    # ex. http://10.14.1.13:8000/api/
+    parser.add_argument(
+        '--api-url', default=utils.env('GOC_API_URL'),
+        help='Defaults to env[GOC_API_URL].')
 
     result = parser.parse_args()
     package_version_check(result, parser)
@@ -108,7 +128,14 @@ def perform_action(args):
         ValidatorManager(args.check).get_validator().validate()
         print('Solution is valid')
     elif args.upload:
-        actions.UploadSolution(args.upload).run()
+        actions.UploadSolution(args.upload, args.username, args.password,
+                               args.api_url).run()
+    elif args.list:
+        actions.ListSolution(args.username, args.password,
+                             args.api_url).run()
+    elif args.delete:
+        actions.DeleteSolution(args.delete, args.username, args.password,
+                               args.api_url).run()
 
 
 def package_version_check(args, parser):

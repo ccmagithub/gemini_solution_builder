@@ -7,6 +7,6 @@ version: '1.0.0'
 # Description
 description: This is gemini_example_v1 solution
 # Category
-category: WCM
+category: WCM/ECM
 # Required gemini version
 gemini_version: ['2015.6']

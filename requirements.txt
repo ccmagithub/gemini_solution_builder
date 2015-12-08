@@ -4,3 +4,4 @@ Mako
 PyYAML
 jsonschema
 ZipTools
+prettytable

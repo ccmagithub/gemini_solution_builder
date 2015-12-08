@@ -90,14 +90,14 @@ class BaseBuildSolution(BaseAction):
             join_path(self.solution_path, '*'),
             self.build_src_dir)
 
-        releases_paths = {}
+        '''releases_paths = {}
         for release in self.meta['releases']:
             releases_paths.setdefault(release['os'], [])
             releases_paths[release['os']].append(
                 join_path(self.build_src_dir, release['repository_path']))
 
         self.build_ubuntu_repos(releases_paths.get('ubuntu', []))
-        self.build_centos_repos(releases_paths.get('centos', []))
+        self.build_centos_repos(releases_paths.get('centos', []))'''
 
     def build_ubuntu_repos(cls, releases_paths):
         for repo_path in releases_paths:
@@ -134,16 +134,16 @@ class BaseBuildSolution(BaseAction):
 
 class BuildSolutionV1(BaseBuildSolution):
 
-    requires = ['rpm', 'createrepo', 'dpkg-scanpackages']
+    requires = ['zip']
 
     @property
     def result_package_mask(self):
-        return join_path(self.solution_path, '{0}-*.fp'.format(self.name))
+        return join_path(self.solution_path, '{0}-*.gsp'.format(self.name))
 
     def make_package(self):
         full_name = '{0}-{1}'.format(self.meta['name'],
                                      self.meta['version'])
-        tar_name = '{0}.fp'.format(full_name)
+        tar_name = '{0}.gsp'.format(full_name)
         tar_path = join_path(
             self.solution_path,
             tar_name)
@@ -171,16 +171,16 @@ class BuildSolutionV2(BaseBuildSolution):
         self.full_name = '{0}-{1}'.format(
             self.meta['name'], self.solution_version)
 
-        tar_name = '{0}.fp'.format(self.full_name)
+        tar_name = '{0}.gsp'.format(self.full_name)
         self.tar_path = join_path(self.rpm_src_path, tar_name)
 
-        fpb_dir = join_path(os.path.dirname(__file__), '..')
+        gsb_dir = join_path(os.path.dirname(__file__), '..')
 
         self.spec_src = os.path.abspath(join_path(
-            fpb_dir, self.rpm_spec_src_path))
+            gsb_dir, self.rpm_spec_src_path))
 
         self.release_tmpl_src = os.path.abspath(join_path(
-            fpb_dir, self.release_tmpl_src_path))
+            gsb_dir, self.release_tmpl_src_path))
 
         self.spec_dst = join_path(self.rpm_path, 'solution_rpm.spec')
 

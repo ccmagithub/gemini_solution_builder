@@ -61,4 +61,4 @@ class CreateSolution(BaseAction):
                 os.path.dirname(__file__), '..', template_path)
 
             utils.copy(template_dir, self.solution_path)
-            # utils.render_files_in_dir(self.solution_path, self.render_ctx)
+            utils.render_files_in_dir(self.solution_path, self.render_ctx)

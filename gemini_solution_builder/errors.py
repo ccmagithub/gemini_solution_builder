@@ -57,3 +57,7 @@ class ReleasesDirectoriesError(BaseSolutionException):
 
 class WrongSolutionDirectoryError(BaseSolutionException):
     pass
+
+
+class SolutionUploadError(BaseSolutionException):
+    pass

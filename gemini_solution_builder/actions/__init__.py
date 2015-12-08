@@ -18,3 +18,6 @@ from gemini_solution_builder.actions.create import CreateSolution  # noqa
 from gemini_solution_builder.actions.build import BuildSolutionV1  # noqa
 from gemini_solution_builder.actions.build import BuildSolutionV2  # noqa
 from gemini_solution_builder.actions.build import make_builder  # noqa
+from gemini_solution_builder.actions.upload import UploadSolution  # noqa
+from gemini_solution_builder.actions.list import ListSolution  # noqa
+from gemini_solution_builder.actions.delete import DeleteSolution  # noqa

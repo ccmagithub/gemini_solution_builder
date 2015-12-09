@@ -38,7 +38,7 @@ class UploadSolution(BaseAction):
     def __init__(self, solution_path, username, password,
                  api_url):
         self.solution_name = utils.basename(solution_path.rstrip('/'))
-        self.solution_path = solution_path
+        self.solution_path = os.path.abspath(solution_path)
         self.username = username
         self.password = password
         self.api_url = api_url.strip('/')
@@ -71,17 +71,17 @@ class UploadSolution(BaseAction):
             raise errors.SolutionUploadError(r.text)
         sol = json.loads(r.text)
         solution = Model(**sol)
-        print "solution: %s" % solution
         return solution
 
     def _solution_upload(self, image_id):
-        url = self.api_url + "/%s/file" % image_id
-        with open(self.solution_path) as fh:
-            sol = fh.read()
-            print "rul: %s" % url
-            requests.put(url,
-                         data=sol,
-                         auth=(self.username, self.password))
+        url = self.api_url + "/solutions/%s/file/" % image_id
+        with open(self.solution_path, 'rb') as fh:
+            files = {'data': fh}
+            r = requests.put(url,
+                             auth=(self.username, self.password),
+                             files=files)
+            if r.status_code not in (200, 201, 204, 300):
+                raise errors.SolutionUploadError(r.text)
 
     def run(self):
         logger.debug('Start solution uploading "%s"', self.solution_path)
@@ -113,11 +113,7 @@ class UploadSolution(BaseAction):
 
         solution = self._solution_create(meta_solname, meta_description,
                                          category_id)
-        try:
-            print "solution.id: %s" % solution.id
-            self._solution_upload(solution.id)
-        except:
-            raise errors.ValidationError()
+        self._solution_upload(solution.id)
         comm_utils.print_list(
             [solution],
             ['id', 'name', 'state', 'desc', 'is_enabled', 'category'],

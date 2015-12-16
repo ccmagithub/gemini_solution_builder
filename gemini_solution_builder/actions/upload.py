@@ -55,7 +55,8 @@ class UploadSolution(BaseAction):
 
     def _get_categories(self):
         cat_url = self.api_url+'/categories/'
-        r = requests.get(cat_url, auth=(self.username, self.password))
+        r = requests.get(cat_url, auth=(self.username, self.password),
+                         verify=False)
         cats = json.loads(r.text)
         categories = []
         for c in cats:
@@ -66,7 +67,8 @@ class UploadSolution(BaseAction):
     def _solution_create(self, name, desc, category):
         url = self.api_url+'/solutions/'
         data = {"name": name, "desc": desc, "category": category}
-        r = requests.post(url, auth=(self.username, self.password), data=data)
+        r = requests.post(url, auth=(self.username, self.password), data=data,
+                          verify=False)
         if r.status_code not in (200, 201, 204, 300):
             raise errors.SolutionUploadError(r.text)
         sol = json.loads(r.text)
@@ -79,7 +81,8 @@ class UploadSolution(BaseAction):
             files = {'data': fh}
             r = requests.put(url,
                              auth=(self.username, self.password),
-                             files=files)
+                             files=files,
+                             verify=False)
             if r.status_code not in (200, 201, 204, 300):
                 raise errors.SolutionUploadError(r.text)
 

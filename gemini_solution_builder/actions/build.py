@@ -134,7 +134,7 @@ class BaseBuildSolution(BaseAction):
 
 class BuildSolutionV1(BaseBuildSolution):
 
-    requires = ['zip']
+    requires = ['tar']
 
     @property
     def result_package_mask(self):

@@ -13,19 +13,21 @@ parameters:
     type: string
     default: 1core2GBmemory20GBdisk
     constraints:
+      - custom_constraint: nova.flavor
+    description:
       - allowed_values:
         - 1core2GBmemory20GBdisk
         - 2cores4GBmemory40GBdisk
         - 4cores8GBmemory80GBdisk
         - 8cores16GBmemory160GBdisk
-      - custom_constraint: nova.flavor
   instance_image:
     type: string
     default: Wordpress
     constraints:
+      - custom_constraint: glance.image
+    description:
       - allowed_values:
         - Wordpress
-      - custom_constraint: glance.image
   instance_image_size:
     type: number
     constraints:
@@ -102,4 +104,5 @@ outputs:
         role: Wordpress
         number: {get_param: instance_number}
   wordpress_group_info:
+    description: Group Info
     value: {get_attr: [wordpress_group, attributes, instance_info]}

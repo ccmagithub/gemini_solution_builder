@@ -1,0 +1,12 @@
+# Solution name
+name: drupal
+# Human-readable name for your solution
+title: Drupal
+# Solution version
+version: '1.0.0'
+# Description
+description: Drupal is a open source content management system.
+# Category
+category: WCM/ECM
+# Required gemini version
+gemini_version: ['2016.1']

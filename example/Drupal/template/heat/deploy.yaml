@@ -1,0 +1,121 @@
+heat_template_version: 2014-10-16
+
+parameters:
+  instance_number:
+    type: number
+    constraints:
+      - range: {min: 1, max: 10}
+  instance_keypair:
+    type: string
+    constraints:
+      - custom_constraint: nova.keypair
+  instance_flavor:
+    type: string
+    description:
+      - allowed_values:
+        - 1core2GBmemory20GBdisk
+    constraints:
+      - custom_constraint: nova.flavor
+  instance_image:
+    type: string
+    default: Drupal
+    description:
+      - allowed_values:
+        - Drupal
+    constraints:
+      - custom_constraint: glance.image
+  instance_image_size:
+    type: number
+    constraints:
+      - range:
+          min: 10
+  instance_public_network:
+    type: string
+    default: net04_ext
+    constraints:
+      - custom_constraint: neutron.network
+  instance_private_network:
+    type: string
+    constraints:
+      - custom_constraint: neutron.network
+  matlab_license_ip:
+    type: string
+    default: 1.1.1.1
+    description: dummy parameters in Drupal solution
+    constraints:
+      - allowed_pattern: "([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])\\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])"
+  portal_ip:
+    type: string
+    constraints:
+      - allowed_pattern: "([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])\\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])"
+  master_ip:
+    type: string
+    constraints:
+      - allowed_pattern: "([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])\\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])"
+  account_name:
+    type: string
+    default: 'Admin'
+    description: account name for Windows OS
+  account_pass:
+    type: string
+    default: 'password'
+    description: account password for Windows OS
+  instance_type:
+    type: string
+    default: Gemini::Server::BootFromVolume
+    constraints:
+      - allowed_values:
+        - Gemini::Server::BootFromVolume
+        - Gemini::Server::BootFromImage
+
+resources:
+  enable_salt:
+    type: OS::Heat::SoftwareConfig
+    properties:
+      config:
+        str_replace:
+          template: {get_file: enable_salt.sh}
+          params:
+            $PORTAL_IP: {get_param: portal_ip}
+  enable_drupal:
+    type: OS::Heat::SoftwareConfig
+    properties:
+      config: {get_file: enable_drupal.sh}
+  drupal_cloud_config:
+    type: OS::Heat::CloudConfig
+    properties:
+      cloud_config:
+        output:
+          all: '| tee -a /var/log/cloud-init-output.log'
+  drupal_init:
+    type: OS::Heat::MultipartMime
+    properties:
+      parts:
+        - config: {get_resource: enable_salt}
+        - config: {get_resource: enable_drupal}
+        - config: {get_resource: drupal_cloud_config}
+  drupal_group:
+    type: OS::Heat::ResourceGroup
+    properties:
+      count: {get_param: instance_number}
+      resource_def:
+        type: {get_param: instance_type}
+        properties:
+          my_keypair: {get_param: instance_keypair}
+          my_flavor: {get_param: instance_flavor}
+          my_image: {get_param: instance_image}
+          my_image_size: {get_param: instance_image_size}
+          my_public_network: {get_param: instance_public_network}
+          my_private_network: {get_param: instance_private_network}
+          my_init: {get_resource: drupal_init}
+
+outputs:
+  stack_des:
+    value:
+      - name: drupal_group_info
+        type: OS::Heat::Resource
+        role: Drupal
+        number: {get_param: instance_number}
+  drupal_group_info:
+    description: Group Info
+    value: {get_attr: [drupal_group, attributes, instance_info]}

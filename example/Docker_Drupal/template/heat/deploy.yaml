@@ -25,14 +25,13 @@ parameters:
     description:
       - allowed_values:
         - drupal:latest
-        - drupal
     constraints:
       - custom_constraint: glance.image
   instance_image_size:
     type: number
     constraints:
       - range:
-          min: 10
+          min: 0
   instance_public_network:
     type: string
     constraints:
@@ -65,15 +64,15 @@ resources:
        - protocol: tcp
          port_range_max: 80
          port_range_min: 80
-#  enable_drupal:
-#    type: OS::Heat::SoftwareConfig
-#    properties:
-#      config: {get_file: enable_drupal.sh}
-#  instance_init:
-#    type: OS::Heat::MultipartMime
-#    properties:
-#      parts:
-#        - config: {get_resource: enable_drupal}
+  #enable_drupal:
+  #  type: OS::Heat::SoftwareConfig
+  #  properties:
+  #    config: {get_file: enable_drupal.sh}
+  #instance_init:
+  #  type: OS::Heat::MultipartMime
+  #  properties:
+  #    parts:
+  #      - config: {get_resource: enable_drupal}
   drupal_group:
     type: OS::Heat::ResourceGroup
     properties:

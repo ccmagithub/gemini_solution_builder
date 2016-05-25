@@ -1,7 +1,7 @@
 # Solution name
-name: drupal
+name: docker-drupal
 # Human-readable name for your solution
-title: IaaSVM 
+title: DrupalDocker
 # Solution version
 version: '1.0.0'
 # Description

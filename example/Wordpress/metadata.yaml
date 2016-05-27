@@ -1,0 +1,12 @@
+# Solution name
+name: wordpress
+# Human-readable name for your solution
+title: Wordpress
+# Solution version
+version: '1.0.0'
+# Description
+description: Wordpress is a free and open-source content management system (CMS) based on PHP and MySQL.
+# Category
+category: WCM/ECM
+# Required gemini version
+gemini_version: ['2016.1']

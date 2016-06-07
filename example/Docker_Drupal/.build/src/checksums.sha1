@@ -1,6 +1,0 @@
-2285d0e9dc9f516237986e48661b4aa9b81005c6 README.md
-6f823280637a82ed1a60ba3c9337991387f8ebe2 configure/salt/drupal/config.sls
-aa5fc4ba7c95851f8369ba75a9ed496a6ffdf412 configure/salt/drupal/files/settings.php
-2d88a131abe3ae6be567e3713a967141cecbed19 logo.jpg
-7d21fae8c11510e32b977fee54305b427ae21230 metadata.yaml
-fc370e35f1101337c8e5acd52542f0903ca78b5f template/heat/deploy.yaml

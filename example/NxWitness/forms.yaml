@@ -22,6 +22,7 @@ create_site:
     forms: CharField
     label: IP Range Start
     widget:
+      forms: TextInput
       attrs:
         - required: required
         - placeholder: Single IP / IP Range Start
@@ -30,6 +31,7 @@ create_site:
     forms: CharField
     label: IP Range End
     widget:
+      forms: TextInput
       attrs:
         - placeholder: IP Range End
         - class: form-control ip_cam
@@ -37,13 +39,15 @@ create_site:
     forms: DecimalField
     label: Port
     widget:
+      forms: NumberInput
       attrs:
-        - placeholder: 8001
+        - placeholder: ex. 8001
         - class: form-control ip_cam
   - parameter: camera_user
     forms: CharField
     label: Authentication
     widget:
+      forms: TextInput
       attrs:
         - placeholder: user
         - class: form-control ip_cam
@@ -51,6 +55,7 @@ create_site:
     forms: CharField
     label: Authentication
     widget:
+      forms: TextInput
       attrs:
         - placeholder: password
         - class: form-control ip_cam
@@ -58,6 +63,7 @@ create_site:
     forms: CharField
     label: Account
     widget:
+      forms: TextInput
       attrs:
         - required: required
         - placeholder: at least 4 characters
@@ -66,6 +72,7 @@ create_site:
     forms: CharField
     label: Password
     widget:
+      forms: TextInput
       attrs:
         - required: required
         - placeholder: at least 6 characters

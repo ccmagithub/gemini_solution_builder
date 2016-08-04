@@ -93,6 +93,15 @@ resources:
        - protocol: tcp
          port_range_max: 8080
          port_range_min: 8080
+  set_hosts:
+    type: OS::Heat::SoftwareConfig
+    properties:
+      config: {get_file: set_hosts.sh}
+  instance_init:
+    type: OS::Heat::MultipartMime
+    properties:
+      parts:
+        - config: {get_resource: set_hosts}
   alfresco_group:
     type: OS::Heat::ResourceGroup
     properties:
@@ -111,6 +120,7 @@ resources:
           my_public_network: {get_param: instance_public_network}
           my_private_network: {get_param: instance_private_network}
           my_security_group: {get_resource: instance_security_group}
+          my_init: {get_resource: instance_init}
           my_availability_zone: {get_param: availability_zone}
           metadata: {"metering.stack": {get_param: 'OS::stack_id'}}
 
@@ -135,6 +145,7 @@ resources:
           my_public_network: {get_param: instance_public_network}
           my_private_network: {get_param: instance_private_network}
           my_security_group: {get_resource: instance_security_group}
+          my_init: {get_resource: instance_init}
           my_availability_zone: {get_param: availability_zone}
           metadata: {"metering.stack": {get_param: 'OS::stack_id'}}
 

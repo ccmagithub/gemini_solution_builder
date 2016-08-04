@@ -47,15 +47,13 @@ parameters:
     type: string
     constraints:
       - allowed_values:
-        - Gemini::LinuxServer::BootFromVolume
-        - Gemini::LinuxServer::BootFromImage
-        - Gemini::WindowsServer::BootFromVolume
-        - Gemini::WindowsServer::BootFromImage
+        - Gemini::Server::BootFromVolume
+        - Gemini::Server::BootFromImage
   portal_ip:
     type: string
     constraints:
       - allowed_pattern: "([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])\\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])"
-  avail_zone:
+  availability_zone:
     type: string
     default: nova
   nx_system_name:
@@ -108,9 +106,8 @@ resources:
           my_public_network: {get_param: instance_public_network}
           my_private_network: {get_param: instance_private_network}
           my_security_group: {get_resource: instance_security_group}
-          my_availability_zone: {get_param: avail_zone}
+          my_availability_zone: {get_param: availability_zone}
           my_init: {get_resource: instance_init}
-          portal_ip: {get_param: portal_ip}
 
 outputs:
   stack_des:

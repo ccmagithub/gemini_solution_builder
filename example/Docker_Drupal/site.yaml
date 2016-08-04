@@ -51,30 +51,7 @@ parameters:
     type: string
     constraints:
       - allowed_pattern: "([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])\\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])"
-  alarm_enabled:
-    type: boolean
-  meter_name:
-    type: string
-    default: cpu_util
-  alarm_statistic:
-    type: string
-    default: avg
-  alarm_period:
-    type: number
-    default: 60
-  alarm_evaluation_periods:
-    type: number
-    default: 1
-  scale_max_size:
-    type: number
-    default: 3
-  scaleup_threshold:
-    type: number
-    default: 60
-  scaledown_threshold:
-    type: number
-    default: 20
-  avail_zone:
+  availability_zone:
     type: string
     default: docker
 
@@ -110,78 +87,7 @@ resources:
           my_public_network: {get_param: instance_public_network}
           my_private_network: {get_param: instance_private_network}
           my_security_group: {get_resource: instance_security_group}
-          portal_ip: {get_param: portal_ip}
-          my_availability_zone: {get_param: avail_zone}
-          metadata: {"metering.stack": {get_param: 'OS::stack_id'}}
-
-  autoscaling_group:
-    type: OS::Heat::AutoScalingGroup
-    properties:
-      min_size: 0
-      max_size: {get_param: scale_max_size}
-      resource:
-        type: {get_param: instance_type}
-        properties:
-          my_stack_name: {get_param: 'OS::stack_name'}
-          my_site_id: {get_param: instance_site_id}
-          #TODO need to generate different index
-          # or change the way of salt registration
-          my_index: 65536
-          my_account: {get_param: instance_account}
-          my_keypair: {get_param: instance_keypair}
-          my_flavor: {get_param: instance_flavor}
-          my_image: {get_param: instance_image}
-          my_image_size: {get_param: instance_image_size}
-          my_public_network: {get_param: instance_public_network}
-          my_private_network: {get_param: instance_private_network}
-          my_security_group: {get_resource: instance_security_group}
-          my_availability_zone: {get_param: avail_zone}
-          portal_ip: {get_param: portal_ip}
-          metadata: {"metering.stack": {get_param: 'OS::stack_id'}}
-
-  scaleup_policy:
-    type: OS::Heat::ScalingPolicy
-    properties:
-      adjustment_type: change_in_capacity
-      auto_scaling_group_id: {get_resource: autoscaling_group}
-      cooldown: 60
-      scaling_adjustment: 1
-
-  scaledown_policy:
-    type: OS::Heat::ScalingPolicy
-    properties:
-      adjustment_type: change_in_capacity
-      auto_scaling_group_id: {get_resource: autoscaling_group}
-      cooldown: 60
-      scaling_adjustment: -1
-
-  alarm_high:
-    type: OS::Ceilometer::Alarm
-    properties:
-      enabled: {get_param: alarm_enabled}
-      meter_name: {get_param: meter_name}
-      statistic: {get_param: alarm_statistic}
-      period: {get_param: alarm_period}
-      evaluation_periods: {get_param: alarm_evaluation_periods}
-      threshold: {get_param: scaleup_threshold}
-      alarm_actions:
-        - {get_attr: [scaleup_policy, alarm_url]}
-      matching_metadata: {'metadata.user_metadata.stack': {get_param: "OS::stack_id"}}
-      comparison_operator: gt
-
-  alarm_low:
-    type: OS::Ceilometer::Alarm
-    properties:
-      enabled: {get_param: alarm_enabled}
-      meter_name: {get_param: meter_name}
-      statistic: {get_param: alarm_statistic}
-      period: {get_param: alarm_period}
-      evaluation_periods: {get_param: alarm_evaluation_periods}
-      threshold: {get_param: scaledown_threshold}
-      alarm_actions:
-        - {get_attr: [scaledown_policy, alarm_url]}
-      matching_metadata: {'metadata.user_metadata.stack': {get_param: "OS::stack_id"}}
-      comparison_operator: lt
+          my_availability_zone: {get_param: availability_zone}
 
 outputs:
   stack_des:
@@ -193,10 +99,3 @@ outputs:
   drupal_group_info:
     description: Group Info
     value: {get_attr: [drupal_group, attributes, instance_info]}
-  autoscaling_group_info:
-    description: AS Group Info
-    value: {get_attr: [autoscaling_group, outputs, instance_info]}
-  scale_up_url:
-    value: {get_attr: [scaleup_policy, alarm_url]}
-  scale_down_url:
-    value: {get_attr: [scaledown_policy, alarm_url]}

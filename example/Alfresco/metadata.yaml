@@ -1,0 +1,12 @@
+# Solution name
+name: alfresco
+# Human-readable name for your solution
+title: Alfresco
+# Solution version
+version: '1.0.0'
+# Description
+description: Alfresco is a open source content management system.
+# Category
+category: WCM/ECM
+# Required gemini version
+gemini_version: ['2016.1']

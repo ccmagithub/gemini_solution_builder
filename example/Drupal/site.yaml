@@ -46,10 +46,8 @@ parameters:
     type: string
     constraints:
       - allowed_values:
-        - Gemini::LinuxServer::BootFromVolume
-        - Gemini::LinuxServer::BootFromImage
-        - Gemini::WindowsServer::BootFromVolume
-        - Gemini::WindowsServer::BootFromImage
+        - Gemini::Server::BootFromVolume
+        - Gemini::Server::BootFromImage
   portal_ip:
     type: string
     constraints:
@@ -77,7 +75,7 @@ parameters:
   scaledown_threshold:
     type: number
     default: 20
-  avail_zone:
+  availability_zone:
     type: string
     default: nova
 
@@ -95,15 +93,6 @@ resources:
        - protocol: tcp
          port_range_max: 80
          port_range_min: 80
-  enable_drupal:
-    type: OS::Heat::SoftwareConfig
-    properties:
-      config: {get_file: enable_drupal.sh}
-  instance_init:
-    type: OS::Heat::MultipartMime
-    properties:
-      parts:
-        - config: {get_resource: enable_drupal}
   drupal_group:
     type: OS::Heat::ResourceGroup
     properties:
@@ -122,9 +111,7 @@ resources:
           my_public_network: {get_param: instance_public_network}
           my_private_network: {get_param: instance_private_network}
           my_security_group: {get_resource: instance_security_group}
-          my_init: {get_resource: instance_init}
-          portal_ip: {get_param: portal_ip}
-          my_availability_zone: {get_param: avail_zone}
+          my_availability_zone: {get_param: availability_zone}
           metadata: {"metering.stack": {get_param: 'OS::stack_id'}}
 
   autoscaling_group:
@@ -148,8 +135,7 @@ resources:
           my_public_network: {get_param: instance_public_network}
           my_private_network: {get_param: instance_private_network}
           my_security_group: {get_resource: instance_security_group}
-          my_availability_zone: {get_param: avail_zone}
-          portal_ip: {get_param: portal_ip}
+          my_availability_zone: {get_param: availability_zone}
           metadata: {"metering.stack": {get_param: 'OS::stack_id'}}
 
   scaleup_policy:

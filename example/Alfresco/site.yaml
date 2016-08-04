@@ -19,14 +19,14 @@ parameters:
     type: string
     description:
       - allowed_values:
-        - 1core2GBmemory20GBdisk
+        - 4cores8GBmemory80GBdisk
     constraints:
       - custom_constraint: nova.flavor
   instance_image:
     type: string
     description:
       - allowed_values:
-        - Wordpress
+        - Alfresco
     constraints:
       - custom_constraint: glance.image
   instance_image_size:
@@ -91,9 +91,9 @@ resources:
             $site_name: {get_param: instance_site_name}
       rules:
        - protocol: tcp
-         port_range_max: 80
-         port_range_min: 80
-  wordpress_group:
+         port_range_max: 8080
+         port_range_min: 8080
+  alfresco_group:
     type: OS::Heat::ResourceGroup
     properties:
       count: {get_param: instance_number}
@@ -185,13 +185,13 @@ resources:
 outputs:
   stack_des:
     value:
-      - name: wordpress_group_info
+      - name: alfresco_group_info
         type: OS:Heat:Resource
-        role: Wordpress
+        role: Alfresco
         number: {get_param: instance_number}
-  wordpress_group_info:
+  alfresco_group_info:
     description: Group Info
-    value: {get_attr: [wordpress_group, attributes, instance_info]}
+    value: {get_attr: [alfresco_group, attributes, instance_info]}
   autoscaling_group_info:
     description: AS Group Info
     value: {get_attr: [autoscaling_group, outputs, instance_info]}

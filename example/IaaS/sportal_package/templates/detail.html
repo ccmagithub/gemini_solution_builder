@@ -1,0 +1,36 @@
+{% extends "base/base.html" %}
+{% load i18n %}
+
+{% block title %}
+  {{ site_name }}
+{% endblock title %}
+
+{% block custom_css %}
+{% endblock custom_css %}
+
+{% block custom_js %}
+{% endblock custom_js %}
+
+{% block header_content %}
+<h3>{{ site_name }}</h3>
+{% endblock header_content %}
+
+{% block breadcrumbs %}
+  <li><a href="{% url site_list_url %}">{{ service_name }}</a></li>
+  <li><a href="{% url site_list_url %}">{% trans "Site List" %}</a></li>
+  <li><a href="{% url site_detail_url site_id %}">{{ site_name }}</a></li>
+{% endblock breadcrumbs %}
+
+{% block content %}
+  <!-- tabs -->
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#about"><i class="glyphicon glyphicon-list-alt"></i> {% trans "About" %}</a></li>
+  </ul>
+
+  <!-- tab contents -->
+  <div class="tab-content">
+    <div id="about" class="tab-pane fade in active">
+      {% include "service/iaas/about.html" %}
+    </div>
+  </div>
+{% endblock content %}

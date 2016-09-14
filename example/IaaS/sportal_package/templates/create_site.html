@@ -1,0 +1,36 @@
+{% extends "base/base.html" %}
+{% load i18n %}
+
+{% block title %}{{ service_name }}{% endblock title %}
+
+{% block header_content %}
+  <h3>{% trans "Create Site" %}</h3>
+{% endblock header_content %}
+
+{% block breadcrumbs %}
+  <li><a href="{% url site_list_url %}">{{ service_name }}</a></li>
+  <li><a href="{% url create_site_url %}">{% trans "Create Site" %}</a></li>
+{% endblock breadcrumbs %}
+
+{% block content %}
+  {% with service_name|lower|add:"_create_site" as create_site %}
+  <form method="post" action="{% url create_site %}" data-toggle="validator" role="form" id="create_site_form">
+    {% csrf_token %}
+    <div class="row form-row">
+      <!-- Site Info start -->
+      {% include "service/create_site/site_info.html" %}
+      <!-- Site Info end -->
+
+      <!-- Service Info start -->
+      <!-- Service Info end -->
+
+    </div> <!-- div class row -->
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary btn-block-ui">{% trans "Create Site" %}</button>
+    </div>
+
+  </form>
+  {% endwith %}
+
+{% endblock content%}

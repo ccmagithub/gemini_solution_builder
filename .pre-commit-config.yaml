@@ -1,0 +1,4 @@
+-   repo: git://github.com/pre-commit/pre-commit-hooks
+    sha: 5541a6a046b7a0feab73a21612ab5d94a6d3f6f0
+    hooks:
+    -   id: flake8

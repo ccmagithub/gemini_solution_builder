@@ -1,0 +1,18 @@
+{% extends "base/base.html" %}
+
+{% block title %} {{ service_name }} {% endblock title %}
+
+{% load i18n %}
+
+{% block header_content %}
+  <h3>{% trans "Site List" %} </h3>
+{% endblock header_content %}
+
+{% block breadcrumbs %}
+  <li><a href="{% url request_url %}">{{ service_name }}</a></li>
+  <li><a href="{% url request_url %}">{% trans "Site List" %}</a></li>
+{% endblock breadcrumbs %}
+
+{% block content %}
+  {% include "service/main/site_list.html" %}
+{% endblock content %}

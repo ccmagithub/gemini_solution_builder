@@ -1,0 +1,49 @@
+create_site:
+  - parameter: private_network
+    forms: ChoiceField
+    label: Virtual Network
+    # TODO We need to define general syntex on YAML for network
+    widget:
+      forms: Select
+      attrs:
+        - class: form-control
+        - required: required
+  - parameter: image
+    forms: ChoiceField
+    label: Image
+    choices:
+      - Windows7-2015.3.0: Windows7-2015.3.0-beta
+      - Ubuntu14.04-2015.3.0: Ubuntu14.04-2015.3.0
+    widget:
+      forms: Select
+      attrs:
+        - class: form-control
+  - parameter: flavor
+    forms: ChoiceField
+    label: Flavor
+    choices:
+      - 2cores4GBmemory40GBdisk: 2cores4GBmemory40GBdisk
+      - 4cores8GBmemory80GBdisk: 4cores8GBmemory80GBdisk
+      - 8cores16GBmemory160GBdisk: 8cores16GBmemory160GBdisk
+    widget:
+      forms: Select
+      attrs:
+        - class: form-control
+  - parameter: instance_number
+    forms: ChoiceField
+    label: Number of Machines
+    choices:
+      - 1: 1
+      - 2: 2
+      - 3: 3
+      - 4: 4
+      - 5: 5
+      - 6: 6
+      - 7: 7
+      - 8: 8
+      - 9: 9
+      - 10: 10
+    widget:
+      forms: Select
+      attrs:
+        - class: form-control

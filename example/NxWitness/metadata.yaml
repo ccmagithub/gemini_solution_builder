@@ -1,0 +1,12 @@
+# Solution name
+name: nxwitness
+# Human-readable name for your solution
+title: NxWitness
+# Solution version
+version: '1.0.0'
+# Description
+description: Nx Witness is a powerful, extensible IP Video Management platform created for security surveillance applications.
+# Category
+category: HPC
+# Required gemini version
+gemini_version: ['2016.2']

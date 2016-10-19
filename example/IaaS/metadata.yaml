@@ -1,0 +1,12 @@
+# Solution name
+name: IaaS
+# Human-readable name for your solution
+title: IaaS
+# Solution version
+version: '1.0.0'
+# Description
+description: IaaS Service for Service Portal
+# Category
+category: Bare
+# Required gemini version
+gemini_version: ['2016.4.0']

@@ -1,0 +1,8 @@
+argparse
+six
+Mako
+PyYAML
+jsonschema
+ZipTools
+prettytable
+requests

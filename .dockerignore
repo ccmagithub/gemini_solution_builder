@@ -1,0 +1,7 @@
+.git
+*.*/*.build/*
+Dockerfile
+.gitignore
+.dockerignore
+*.*/*.gsp
+.*.*

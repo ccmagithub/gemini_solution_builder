@@ -76,14 +76,14 @@ def parse_args():
     group.add_argument(
         '--check', help='check that solution is valid',
         type=decode_string, metavar='path_to_directory')
-    group.add_argument(
-        '--upload', help='upload a solution',
-        type=decode_string, metavar='path_to_package')
-    group.add_argument(
-        '--list', help='list a solution', action='store_true')
-    group.add_argument(
-        '--delete', help='delete a solution',
-        type=decode_string, metavar='solution_id')
+    # group.add_argument(
+    #     '--upload', help='upload a solution',
+    #     type=decode_string, metavar='path_to_package')
+    # group.add_argument(
+    #     '--list', help='list a solution', action='store_true')
+    # group.add_argument(
+    #     '--delete', help='delete a solution',
+    #     type=decode_string, metavar='solution_id')
     parser.add_argument(
         '--debug', help='enable debug mode',
         action="store_true")
@@ -93,19 +93,19 @@ def parse_args():
         type=decode_string)
 
     # ex. admin
-    parser.add_argument(
-        '--username', default=utils.env('GOC_USERNAME'),
-        help='Defaults to env[GOC_USERNAME].')
+    # parser.add_argument(
+    #     '--username', default=utils.env('GOC_USERNAME'),
+    #     help='Defaults to env[GOC_USERNAME].')
 
     # ex. admin
-    parser.add_argument(
-        '--password', default=utils.env('GOC_PASSWORD'),
-        help='Defaults to env[GOC_PASSWORD].')
+    # parser.add_argument(
+    #     '--password', default=utils.env('GOC_PASSWORD'),
+    #     help='Defaults to env[GOC_PASSWORD].')
 
     # ex. http://10.14.1.13:8000/api/
-    parser.add_argument(
-        '--api-url', default=utils.env('GOC_API_URL'),
-        help='Defaults to env[GOC_API_URL].')
+    # parser.add_argument(
+    #     '--api-url', default=utils.env('GOC_API_URL'),
+    #     help='Defaults to env[GOC_API_URL].')
 
     result = parser.parse_args()
     package_version_check(result, parser)

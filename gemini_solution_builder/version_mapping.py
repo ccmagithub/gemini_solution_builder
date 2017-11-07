@@ -68,6 +68,13 @@ def get_version_mapping_from_solution(solution_path):
     if not utils.exists(meta_path):
         errors.WrongSolutionDirectoryError(
             'Wrong path to the solution, cannot find "%s" file', meta_path)
+        raise Exception('cannot find %s file' % meta_path)
+
+    site_path = join_path(solution_path, 'site.yaml')
+    if not utils.exists(site_path):
+        errors.WrongSolutionDirectoryError(
+            'Wrong path to the solution, cannot find "%s" file', site_path)
+        raise Exception('cannot find %s file' % site_path)
 
     meta = utils.parse_yaml(meta_path)
     package_version = meta.get('version')

@@ -22,17 +22,15 @@ from gemini_solution_builder import utils
 latest_version = '1.0.0'
 
 
-def get_mapping():
+def get_mapping(version):
     # NOTE(eli): It's required not to have circular dependencies error
     from gemini_solution_builder.actions import build
     from gemini_solution_builder import validators
 
-    return [
-        {'version': '1.0.0',
-         'templates': ['templates/base', 'templates/v1/'],
-         'validator': validators.ValidatorV1,
-         'builder': build.BuildSolutionV1},
-    ]
+    return {'version': version,
+            'templates': ['templates/base', 'templates/v1/'],
+            'validator': validators.ValidatorV1,
+            'builder': build.BuildSolutionV1}
 
 
 def get_solution_for_version(version):
@@ -45,13 +43,13 @@ def get_solution_for_version(version):
               'validator' - validator class
               'builder' - builder class
     """
-    data = filter(lambda p: p['version'] == version, get_mapping())
+    data = get_mapping(version)
 
     if not data:
         raise errors.WrongPackageVersionError(
             'Wrong package version "{0}"'.format(version))
 
-    return data[0]
+    return data
 
 
 def get_version_mapping_from_solution(solution_path):
